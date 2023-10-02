@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="header-box">
+    <div class="topnav">
+      <button class="priority-button" data-priority="High">High</button>
+      <button class="priority-button" data-priority="Medium">Medium</button>
+      <button class="priority-button" data-priority="Low">Low</button>
+      <input type="text" id="searchBar" placeholder="Search...">
+    </div>
+  </div>
+
+  <div id="myDIV" class="header">
+    <h1 style="color:#00539CFF;">My To Do List</h1>
+    <form>
+      <label for="newEntity">Add to list:</label>
+      <input type="text" id="newEntity" name="item">
+      <p>Priority:</p>
+      <input type="radio" id="High" name="priority" value="High">
+      <label for="High">High</label>
+      <input type="radio" id="Medium" name="priority" value="Medium">
+      <label for="Medium">Medium</label>
+      <input type="radio" id="Low" name="priority" value="Low">
+      <label for="Low">Low</label>
+      <br>
+      <input type="submit" value="Add" name="addButton" id="addButton">
+    </form>
+    <button id="sortButton">Sort by Priority</button>
+  </div>
+  
+  <ul id="myUL">
+    {% for item in todo_list %}
+      <li data-priority="{{ item.priority }}">
+        {{ item.text }} <span class="priority">({{ item.priority }})</span>
+        <button class="delete" name="deleteButton" data-id="{{ item.id }}">Delete</button>
+      </li>
+    {% endfor %}
+  </ul>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+  const deleteButtons = document.querySelectorAll('.delete');
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const itemId = button.getAttribute('data-id');
+      deleteItem(itemId);
+    });
+  });
+  function deleteItem(itemId) {
+  }
+window.addEventListener("load", function() {
+  refreshList();
+});
+</script>
+</body>
+</html>
+
